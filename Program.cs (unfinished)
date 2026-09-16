@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Raylib_cs;
 
 namespace Space_lasergame
@@ -22,8 +22,8 @@ namespace Space_lasergame
             int player_speed = 35;
 
             int laser_width = 10;
-            int laser_height = 101;
             int laser_speed = 20;
+            int laser_height = 101;
             int laser_x = player_x;
             int laser_y = player_y;
             bool laser_active = false;
@@ -90,7 +90,7 @@ namespace Space_lasergame
                         Raylib.DrawTexture(laser,laser_x,laser_y,Color.White);
                         Raylib.DrawTexture(meteroite, enemy_x, enemy_y, Color.White);
 
-                        if (laser)
+                        if (laser_x < enemy_x + enemy_width && laser_x + laser_width > enemy_x && laser_y < enemy_y + enemy_height && laser_y + laser_height > enemy_y)
                         {
                             score += 1;
                             laser_active = false;
@@ -103,14 +103,14 @@ namespace Space_lasergame
                         }
                     }
                     enemy_y += enemy_speed;
-                    if(enemy_y > 1200)
+                    if(enemy_y > 1100)
                     {
                         enemy_x = Raylib.GetRandomValue(0, 1920 - enemy_width);
                         enemy_y = -enemy_height;
                     }
                     Raylib.DrawTexture(space_ship, player_x, player_y, Color.White);
                     Raylib.DrawTexture(meteroite, enemy_x, enemy_y, Color.White);
-                    if (space_ship)
+                    if (player_x < enemy_x + enemy_width && player_x + player_width > enemy_x && player_y < enemy_y + enemy_height && player_y + player_height > enemy_y)
                     {
                         game_over = true;
                     }
@@ -125,7 +125,7 @@ namespace Space_lasergame
                 }
                 if (!game_over)
                 {
-                    Raylib.DrawText($"Score: {score}", 325, 200, 30, Color.Green);
+                    Raylib.DrawText($"Score: {score}", 100, 100, 30, Color.Green);
                 }
                 else
                 {
@@ -134,8 +134,8 @@ namespace Space_lasergame
                     int text_y = (1100 / 2) - (30 / 2);
                     Raylib.DrawText($"Final Score: {score}", text_x,text_y,30,Color.White);
                 }
+                Raylib.EndDrawing();
             }
-            Raylib.EndDrawing();
         }
     }
 }
